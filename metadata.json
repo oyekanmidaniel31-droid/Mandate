@@ -1,0 +1,6 @@
+{
+  "name": "Mandate",
+  "description": "A life-and-power simulation set in the Federal Republic of Naijaland. Hustle from the streets to the Villa, manage family and crises, and cement your legacy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
