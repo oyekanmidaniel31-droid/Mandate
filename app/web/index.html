@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mandate: The Long Game - Naijaland Simulator</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#008751">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header>
+      <div>
+        <div class="app-title">MANDATE: THE LONG GAME</div>
+        <div style="font-size: 0.7rem; color: #94a3b8;" id="playerNameDisplay">Chief Aspirant</div>
+      </div>
+      <div class="stage-badge" id="stageBadge">CAMPUS</div>
+    </header>
+
+    <!-- HUD Resource Panel -->
+    <div class="hud-panel">
+      <!-- Nara -->
+      <div class="hud-card" onclick="openStatsModal()">
+        <div class="hud-label">Nara (₦)</div>
+        <div class="hud-value nara" id="hudNara">₦250,000</div>
+      </div>
+      <!-- Influence (Clout) -->
+      <div class="hud-card" onmouseenter="showTooltip('influenceTip')" onmouseleave="hideTooltip('influenceTip')" onclick="toggleTooltip('influenceTip')">
+        <div class="hud-label">Influence</div>
+        <div class="hud-value influence" id="hudInfluence">15%</div>
+        <div class="tooltip-box" id="influenceTip">
+          <strong>Influence & Clout:</strong> Controls public respect, voter turnout, and media coverage across Naijaland. Higher influence makes your political rallies draw massive crowds.
+        </div>
+      </div>
+      <!-- Family Loyalty -->
+      <div class="hud-card" onmouseenter="showTooltip('loyaltyTip')" onmouseleave="hideTooltip('loyaltyTip')" onclick="toggleTooltip('loyaltyTip')">
+        <div class="hud-label">Family Loyalty</div>
+        <div class="hud-value loyalty" id="hudLoyalty">85%</div>
+        <div class="tooltip-box" id="loyaltyTip">
+          <strong>Family Loyalty:</strong> Represents your bond with relatives, cousins, and spouse. If it drops too low, family secrets leak to opposition newspapers and scandals erupt.
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary HUD stats strip -->
+    <div style="display: flex; justify-content: space-between; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 10px; font-size: 0.75rem; color: var(--text-muted); border: 1px solid var(--border-color);">
+      <div>⚡ Energy: <strong id="hudEnergy" style="color: #34d399;">100</strong></div>
+      <div>❤️ Health: <strong id="hudHealth" style="color: #f87171;">90%</strong></div>
+      <div>🧠 Stress: <strong id="hudStress" style="color: #fbbf24;">15%</strong></div>
+    </div>
+
+    <!-- Main Game Card Area -->
+    <div id="gameScreen" class="card-container">
+      <div class="event-category" id="eventCategory">Campus Admission Drama</div>
+      <div class="event-headline" id="eventHeadline">The JAMB Cut-Off Switcheroo</div>
+      <div class="event-narration" id="eventNarration">Loading life event...</div>
+      <div class="pidgin-quote" id="pidginQuote">"Head of Admin whisper..."</div>
+      
+      <div class="choices-list" id="choicesList">
+        <!-- Choices injected via JS -->
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="switchTab('game')">
+        <span>🏛️</span>
+        Career
+      </button>
+      <button class="nav-item" onclick="openPhoneModal()">
+        <span>📱</span>
+        Padi & News
+      </button>
+      <button class="nav-item" onclick="openStatsModal()">
+        <span>📊</span>
+        Profile & Stats
+      </button>
+      <button class="nav-item" onclick="triggerRestartModal()">
+        <span>🔄</span>
+        Restart
+      </button>
+    </nav>
+  </div>
+
+  <!-- Stats & Profile Modal -->
+  <div class="modal-overlay" id="statsModal">
+    <div class="modal-content">
+      <div class="modal-title">Politician Dossier</div>
+      <div id="dossierSummary" style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.4;">
+        Loading dossier...
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box"><label>Ambition</label><br><val id="statAmbition">50</val></div>
+        <div class="stat-box"><label>Conscience</label><br><val id="statConscience">50</val></div>
+        <div class="stat-box"><label>Political Capital</label><br><val id="statPolCap">10</val></div>
+        <div class="stat-box"><label>Godfather Favor</label><br><val id="statGodfather">20</val></div>
+        <div class="stat-box"><label>Anger Index</label><br><val id="statAnger">5</val></div>
+        <div class="stat-box"><label>Risk Appetite</label><br><val id="statRisk">30</val></div>
+      </div>
+      <button class="btn-primary" onclick="closeStatsModal()">Close Dossier</button>
+    </div>
+  </div>
+
+  <!-- Phone & Padi Modal -->
+  <div class="modal-overlay" id="phoneModal">
+    <div class="modal-content" style="background: #0f172a; border-color: #38bdf8;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="modal-title" style="color: #38bdf8;">📱 Padi & Naija Globe News</div>
+        <button onclick="closePhoneModal()" style="background:none; border:none; color:#fff; font-size:1.2rem; cursor:pointer;">✕</button>
+      </div>
+      <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 4px;">Latest confidential texts & breaking headlines:</div>
+      <div id="phoneFeed" style="display: flex; flex-direction: column; gap: 10px; max-height: 350px; overflow-y: auto;">
+        <!-- Phone messages injected -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Outcome Modal -->
+  <div class="modal-overlay" id="outcomeModal">
+    <div class="modal-content">
+      <div class="modal-title" id="outcomeTitle">Decision Result</div>
+      <div id="outcomeText" style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;"></div>
+      <div id="outcomeDeltas" style="background: rgba(0,135,81,0.1); padding: 10px; border-radius: 8px; font-size: 0.8rem; color: #34d399;"></div>
+      <button class="btn-primary" onclick="proceedNextEvent()">Continue The Long Game</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
